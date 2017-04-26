@@ -5,7 +5,12 @@
   "author": "Ruslan Loboda",
   "private": true,
   "scripts": {
-    "postinstall": "npm install express",
+    "postinstall": "npm install",
     "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "serve-static": "*",
+    "connect-history-api-fallback": "*"
   }
 }
