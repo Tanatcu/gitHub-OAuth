@@ -1,9 +1,12 @@
 var express = require('express');
 var app = express();
+var cors = require('cors')
 var history = require('connect-history-api-fallback');
 var serveStatic = require('serve-static');
 
 app.use(history({}));
+
+app.use(cors());
 
 app.use(serveStatic(__dirname));
 
