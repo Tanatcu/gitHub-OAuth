@@ -8,9 +8,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "*",
-    "serve-static": "*",
-    "connect-history-api-fallback": "*",
-    "cors": "^2.8.3"
+
   }
 }
