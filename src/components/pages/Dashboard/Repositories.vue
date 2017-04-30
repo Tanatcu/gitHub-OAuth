@@ -7,22 +7,40 @@
 				<div class="item_name">{{repository.name}}</div>
 
 				<div class="buttons_space">
-					<div class="issues_button" @click="showIssues(repository)">i</div>
+					<div class="issues_button" @click="showIssues(repository)"
+							 @mouseover="showToolTip('Show issues of ' + repository.name)"
+							 @mousemove="replaceToolTip"
+							 @mouseleave="hideToolTip">
+						i
+					</div>
 				</div>
 			</div>
 		</div>
+
+		<tooltip :data="tooltipData.data" :coords="coords" :tumbler="tooltipData.tumbler"></tooltip>
 	</div>
 </template>
 
 <script>
+	import tooltip from '../../ToolTip.vue'
+
 	export default {
 		name: "Repositories",
+		components: {tooltip},
 		mounted() {
 			this.getRepositories()
 		},
 		data() {
 			return {
-				repositories: []
+				repositories: [],
+				tooltipData: {
+					data: [],
+					tumbler: false
+				},
+				coords: {
+					x: 0,
+					y: 0
+				}
 			}
 		},
 		methods: {
@@ -39,6 +57,18 @@
 						repo: repo.name
 					}
 				})
+			},
+			showToolTip(data) {
+				this.tooltipData.data = [data]
+				this.tooltipData.tumbler = true
+			},
+			replaceToolTip(e) {
+				this.coords.x = e.screenX
+				this.coords.y = e.screenY
+			},
+			hideToolTip() {
+				this.tooltipData.tumbler = false
+				this.tooltipData.data = {}
 			}
 		}
 	}
