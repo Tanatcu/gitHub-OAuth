@@ -32,6 +32,9 @@
 	export default {
 		name: "Repositories",
 		mounted() {
+			/**
+			 * Getting repos list
+			 */
 			this.$api.get('user/repos').then((response) => {
 				this.repositories = response
 			})

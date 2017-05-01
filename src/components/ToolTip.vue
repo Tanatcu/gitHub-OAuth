@@ -11,6 +11,9 @@
 		props: ["tumbler", "coords", "data"],
 		computed: {
 			bottom() {
+				/**
+				 * I use "- 35" expression for configure position of tooltip (custom value)
+				 */
 				return this.screenHeight - this.coords.y - 35
 			}
 		},

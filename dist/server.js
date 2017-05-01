@@ -1,13 +1,7 @@
 let express = require('express')
 let app = express()
 
-let fs = require('fs')
 let https = require('https')
-
-let key = fs.readFileSync('cert/key.pem')
-let cert = fs.readFileSync('cert/server.crt')
-
-var sslRedirect = require('heroku-ssl-redirect')
 
 let bodyParser = require('body-parser')
 let history = require('connect-history-api-fallback')
@@ -15,7 +9,7 @@ let cors = require('cors')
 let serveStatic = require('serve-static')
 let request = require('request')
 
-let port = process.env.PORT || 443
+let port = process.env.PORT || 8080
 
 /**
  * Parsers for JSON format
@@ -50,15 +44,13 @@ let options = {
 	}
 }
 
-app.use(sslRedirect())
-
 /**
  * Listener for custom request
  */
 app.post('/get_token', (req, res) => {
-	let reqData = req.body
+	let body = req.body
 
-	options.url += '?client_id=' + reqData.client_id + '&client_secret=' + reqData.client_secret + '&code=' + reqData.code
+	options.url += '?client_id=' + body.client_id + '&client_secret=' + body.client_secret + '&code=' + body.code
 
 	/**
 	 * Request to github api for getting access_token (i know, it's bad code)
@@ -83,9 +75,5 @@ app.post('/get_token', (req, res) => {
 /**
  * Start of server
  */
-https.createServer({
-	key: key,
-	cert: cert
-}, app).listen(port, function() {
-	console.log('Server started ' + port)
-});
+app.listen(port)
+console.log('Server started ' + port)

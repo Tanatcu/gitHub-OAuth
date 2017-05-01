@@ -16,7 +16,7 @@ export default {
 	mutations: {
 
 		/**
-		 * Mutate user status
+		 * Update user object
 		 * @param {object} state - passing as default object
 		 * @param {object} user - user object
 		 */
@@ -26,10 +26,11 @@ export default {
 		},
 
 		/**
-		 * Mutate user status to
+		 * Clean user object
 		 * @param {object} state - passing as default object
 		 */
 		logout(state) {
+			state.User = {}
 			state.User.isLogged = false
 		}
 	},

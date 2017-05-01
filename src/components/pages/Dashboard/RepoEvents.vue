@@ -65,7 +65,7 @@
 				 * Bad code too. I didn't have time to develop class for parsing events to readable text for human
 				 */
 				if(data.type === 'PushEvent') {
-					data.payload.commits.map(item => {
+					data.payload.commits.map((item) => {
 						this.tooltip.data.push('"' + item.message + '"')
 					})
 				} else if(data.type === 'CreateEvent') {

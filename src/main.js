@@ -31,6 +31,9 @@ Vue.http.interceptors.push((request, next) => {
 	if(CheckAuthorization(store))
 		request.headers.set("Authorization", type + ' ' + token)
 
+	// request.headers.set("Accept", "application/json")
+
+	console.info(request)
 	next();
 })
 

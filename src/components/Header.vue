@@ -4,7 +4,7 @@
 			<h2 class="title" @click="mainPage">GitHub OAuth</h2>
 
 			<div class="right_panel">
-				<img class="avatar" :src="user.avatar_url" alt="">
+				<img class="avatar" :src="user.avatar_url">
 				<div class="login">{{user.login}}</div>
 				<img src="../assets/logout.svg" alt="logout" class="logout_icon" @click="logout">
 			</div>

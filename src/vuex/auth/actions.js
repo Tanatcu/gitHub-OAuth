@@ -2,9 +2,9 @@ import Vue from 'vue'
 
 /**
  * Function checking status (logged or isn't) of user
+ * @params {object} default store object
  * @return {boolean}
  */
-
 export function Check({commit, state}) {
 	if(state.Authorization.User.isLogged) {
 		return true
@@ -21,7 +21,7 @@ export function Check({commit, state}) {
  * Redirect to gitHub for starting authorization
  */
 export function getCode() {
-	window.location = 'https://github.com/login/oauth/authorize?client_id=' + process.env.CLIENT_ID + '&scope=user'
+	window.location = 'https://github.com/login/oauth/authorize?client_id=' + process.env.CLIENT_ID
 }
 
 /**
@@ -35,25 +35,34 @@ export function getCode() {
 export function getAccessToken() {
 	let code = window.location.search.replace('?code=', '')
 
-	/**
-	 * This way of requesting access_token returns 404 for me.
-	 * I'm leaving this commented string for continue to fixing this problem
-	 */
-	//'https://github.com/login/oauth/access_token?client_id=' + clientId + '&client_secret=' + clientSecret + '&code=' + code
-
 	return new Promise((resolve, reject) => {
-		Vue.api.post("http://localhost:443/get_token", {
-			client_id: process.env.CLIENT_ID,
-			client_secret: process.env.CLIENT_SECRET,
-			code: code,
 
-		}).then((response) => {
-			if(!response.access_token)
-				reject(response)
+			/**
+			 * This way of requesting access_token returns 404 for me.
+			 * My attempt to sent request from front side (failure)
+			 * I'm leaving this commented string for continue to fixing this problem
+			 */
+			// let url = 'https://github.com/login/oauth/access_token'
 
-			resolve(response)
-		})
-	})
+			// url += '?client_id=' + process.env.CLIENT_ID
+			// url += '&client_secret=' + process.env.CLIENT_SECRET
+			// url += '&code=' + code
+
+			/**
+			 * Getting access_token via node middleware
+			 */
+			Vue.api.post('http://localhost:8080/get_token', {
+				client_id: process.env.CLIENT_ID,
+				client_secret: process.env.CLIENT_SECRET,
+				code: code
+			}).then(response => {
+				if(!response.access_token)
+					reject(response)
+
+				resolve(response)
+			})
+		}
+	)
 }
 
 /**

@@ -9,10 +9,18 @@
 	export default {
 		name: 'app',
 		mounted () {
-			this.$refs.toastr.defaultTimeout = 4000
+			/**
+			 * Creating listener for toast modal
+			 * Why here? Because only here situated vue-toastr component
+			 * All toast will be show using this component
+			 */
 			this.$event.connect('showToast', this.showToast)
+			this.$refs.toastr.defaultTimeout = 4000
 		},
 		beforeDestroy() {
+			/**
+			 * Before unmounting component i must destroy all listeners of this component
+			 */
 			this.$event.disconnect('showToast')
 		},
 		methods: {

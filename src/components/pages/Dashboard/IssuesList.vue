@@ -69,10 +69,7 @@
 					data: {},
 					tumbler: false
 				},
-				coordinates: {
-					x: 0,
-					y: 0
-				}
+				coordinates: {x: 0, y: 0}
 			}
 		},
 		methods: {
