@@ -7,6 +7,8 @@ let https = require('https')
 let key = fs.readFileSync('cert/key.pem')
 let cert = fs.readFileSync('cert/server.crt')
 
+var sslRedirect = require('heroku-ssl-redirect')
+
 let bodyParser = require('body-parser')
 let history = require('connect-history-api-fallback')
 let cors = require('cors')
@@ -47,6 +49,8 @@ let options = {
 		"Accept": "application/json"
 	}
 }
+
+app.use(sslRedirect())
 
 /**
  * Listener for custom request
