@@ -13,7 +13,7 @@ let cors = require('cors')
 let serveStatic = require('serve-static')
 let request = require('request')
 
-let port = process.env.PORT || 80
+let port = process.env.PORT || 443
 
 /**
  * Parsers for JSON format
