@@ -4,8 +4,8 @@ let app = express()
 let fs = require('fs')
 let https = require('https')
 
-let key = fs.readFileSync('sert/key.pem')
-let cert = fs.readFileSync('sert/server.crt')
+let key = fs.readFileSync('cert/key.pem')
+let cert = fs.readFileSync('cert/server.crt')
 
 let bodyParser = require('body-parser')
 let history = require('connect-history-api-fallback')
@@ -79,10 +79,9 @@ app.post('/get_token', (req, res) => {
 /**
  * Start of server
  */
-
 https.createServer({
 	key: key,
 	cert: cert
-}, app).listen(port);
-
-console.log('Server started ' + port)
+}, app).listen(port, function() {
+	console.log('Server started ' + port)
+});

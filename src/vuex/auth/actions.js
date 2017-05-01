@@ -42,7 +42,7 @@ export function getAccessToken() {
 	//'https://github.com/login/oauth/access_token?client_id=' + clientId + '&client_secret=' + clientSecret + '&code=' + code
 
 	return new Promise((resolve, reject) => {
-		Vue.api.post("https://localhost:80/get_token", {
+		Vue.api.post("http://localhost:80/get_token", {
 			client_id: process.env.CLIENT_ID,
 			client_secret: process.env.CLIENT_SECRET,
 			code: code,
