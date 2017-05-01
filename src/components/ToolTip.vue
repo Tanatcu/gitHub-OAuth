@@ -1,23 +1,22 @@
 <template>
-	<div class="container" :style="{'top': coords.y - 130 + 'px', 'left': coords.x - 50 + 'px'}" v-show="tumbler">
-		<div v-for="item in data">
-			{{item}}
-		</div>
+	<div class="container" :style="{'bottom': bottom + 'px', 'left': coords.x + 'px'}"
+			 v-show="tumbler">
+		<div v-for="item in data">{{item}}</div>
 	</div>
 </template>
 
 <script>
 	export default {
 		name: "ToolTip",
-		props: ["data", "tumbler", "coords"],
+		props: ["tumbler", "coords", "data"],
 		computed: {
-			x() {
-				console.info(this.coords.x)
-				return this.coords.x
-			},
-			y() {
-				console.info(this.coords.y)
-				return this.coords.y
+			bottom() {
+				return this.screenHeight - this.coords.y - 35
+			}
+		},
+		data() {
+			return {
+				screenHeight: screen.height
 			}
 		}
 	}

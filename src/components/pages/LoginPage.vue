@@ -45,6 +45,7 @@
 	}
 
 	.login {
+		cursor: pointer;
 		border: none;
 		width: 80px;
 		height: 30px;

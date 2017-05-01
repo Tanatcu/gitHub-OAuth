@@ -1,7 +1,8 @@
 import {
 	getAccessToken as getAccessToken,
 	getCode as getCode,
-	logout
+	logout,
+	getUser
 } from './actions'
 
 const state = {
@@ -13,9 +14,21 @@ const state = {
 export default {
 	state,
 	mutations: {
-		loginUser(state) {
+
+		/**
+		 * Mutate user status
+		 * @param {object} state - passing as default object
+		 * @param {object} user - user object
+		 */
+		loginUser(state, user) {
+			state.User = user || {}
 			state.User.isLogged = true
 		},
+
+		/**
+		 * Mutate user status to
+		 * @param {object} state - passing as default object
+		 */
 		logout(state) {
 			state.User.isLogged = false
 		}
@@ -23,6 +36,7 @@ export default {
 	actions: {
 		getAccessToken,
 		getCode,
+		getUser,
 		logout
 	}
 }

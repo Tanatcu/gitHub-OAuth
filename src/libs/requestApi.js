@@ -37,13 +37,11 @@ let Api = {
 			case "get":
 				data = {"params": data}
 				break;
-			case "post":
-				data = {"body": data}
-				break;
 			case "delete":
 				data = {"body": data}
 				break;
 		}
+
 		/**
 		 * Returning promise
 		 * @url {string} contains root part computed before and url part

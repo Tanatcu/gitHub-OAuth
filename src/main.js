@@ -11,6 +11,8 @@ import Storage from './libs/synchroLocalStorage'
 import App from './App.vue'
 import router from './router'
 
+import Tooltip from './components/ToolTip.vue'
+
 require('vue-toastr/src/vue-toastr.less')
 
 Vue.use(Toastr)
@@ -20,12 +22,13 @@ Vue.use(EventBus)
 Vue.use(Storage)
 
 Vue.component('vue-toastr', Toastr)
+Vue.component('tooltip', Tooltip)
 
 Vue.http.interceptors.push((request, next) => {
-	let token = Vue.storage.get('token')
 	let type = Vue.storage.get('type')
+	let token = Vue.storage.get('token')
 
-	if(CheckAuthorization(store) && request.url !== 'https://github.com/login/oauth/access_token')
+	if(CheckAuthorization(store))
 		request.headers.set("Authorization", type + ' ' + token)
 
 	next();

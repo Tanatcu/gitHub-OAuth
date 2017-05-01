@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 /**
- * Function checking token of user
+ * Function checking status (logged or isn't) of user
  * @return {boolean}
  */
 
@@ -17,18 +17,36 @@ export function Check({commit, state}) {
 	return false
 }
 
+/**
+ * Redirect to gitHub for starting authorization
+ */
 export function getCode() {
-	window.location = 'https://github.com/login/oauth/authorize?client_id=406d2f8f932cc21dc3ce'
+	window.location = 'https://github.com/login/oauth/authorize?client_id=' + process.env.CLIENT_ID + '&scope=user'
 }
 
+/**
+ * Exchanging unique code to access_token
+ * I send request to my server middleware where will did redirect request to github server (file: "dist.server.js")
+ * Necessary data i getting from "process" object (file: "config/dev.env.js")
+ * I getting unique code from redirect url link
+ *
+ * @returns {Promise}
+ */
 export function getAccessToken() {
 	let code = window.location.search.replace('?code=', '')
 
+	/**
+	 * This way of requesting access_token returns 404 for me.
+	 * I'm leaving this commented string for continue to fixing this problem
+	 */
+	//'https://github.com/login/oauth/access_token?client_id=' + clientId + '&client_secret=' + clientSecret + '&code=' + code
+
 	return new Promise((resolve, reject) => {
-		Vue.api.get('https://github.com/login/oauth/access_token', {
-			client_id: '406d2f8f932cc21dc3ce',
-			client_secret: '90422725a40a5b07ddfd82947ea1109c668dedf3',
-			code: code
+		Vue.api.post("http://localhost:80/get_token", {
+			client_id: process.env.CLIENT_ID,
+			client_secret: process.env.CLIENT_SECRET,
+			code: code,
+
 		}).then((response) => {
 			if(!response.access_token)
 				reject(response)
@@ -38,6 +56,23 @@ export function getAccessToken() {
 	})
 }
 
+/**
+ * Getting user
+ * @param commit
+ */
+export function getUser({commit}) {
+	Vue.api.get("user").then(response => commit('loginUser', response))
+}
+
+/**
+ * Logout function
+ * Change status of user
+ * Removing all necessary data of user from localStorage
+ * Go to main page
+ *
+ * @param {object} state - root object of store
+ * @param {object} router - i use router plugin
+ */
 export function logout({state}, router) {
 	state.User.isLogged = false
 

@@ -9,12 +9,12 @@
 
 				this.$store.commit('loginUser')
 
-				this.$router.push('/dashboard')
+				this.$router.replace('/dashboard')
 			}, (error) => {
 				if(error.error_description)
 					this.$event.toast('e', error.error_description)
 
-				this.$router.push('/')
+				this.$router.replace('/')
 			})
 		}
 	}
